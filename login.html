@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台系统管理</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/login.css">
+
+    <script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="./layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+    
+
+</head>
+<body class="login-bg">
+    <div class="container">
+		<div class="login">
+            <div class="message">长城净化能源管理系统</div>
+            <form method="post" class="layui-form" >
+                <input id="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" id="username">
+                <input id="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input" id="password">
+                <input value="登 录" id="login_btn" lay-submit="" lay-filter="login" style="width:100%;background: #0d957a" type="submit">
+            </form>
+        </div>
+		<div id="particles-js"></div>
+	</div>
+    
+</body>
+    <script src="./js/particles.js"></script>
+    <script src="./js/app.js"></script>
+    <script type="text/javascript">
+   
+    layui.use(['form','jquery'], function(){
+        var form = layui.form //
+		,table = layui.table //表格
+		,$ = layui.jquery;
+        
+        //监听提交
+        $("#login_btn").on('click',function(data){
+        // form.on('submit(login)', function(data){
+            // var username = $.trim($("#username").val());
+            // $.cookie('username','username'); 
+
+           
+           
+            $.ajax({
+                url:"http://192.168.1.105:8080/mis/u/findUser",
+                type: "POST",
+                dataType: "json",
+                data:{
+                    userName: $("#username").val(),
+                    pwd: $("#password").val(),
+                },
+                success: function(data){
+                    console.log(data);
+                    if(data.Statu==1){
+                        window.location.href = "index.html";
+                        return false;
+                    }else{
+                        alert('登陆失败');
+                        return false;
+                    }
+                }
+            });
+            
+        });
+
+        function setCookie(name,value){  
+            var Days = 7;   //cookie 将被保存7天
+            var exp  = new Date();  //获得当前时间
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);  //换成毫秒
+            document.cookie = name + "="+ value + ";expires=" + exp.toGMTString();
+        } 
+
+    });
+
+</script>
+
+</body>
+</html>

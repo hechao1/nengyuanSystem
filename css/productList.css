@@ -1,0 +1,72 @@
+
+.layui-larry-box{
+  width: 100%;
+  height: 200px;
+  padding: 10px 10px;
+}
+.TopOne{
+  width: 100%;
+  height: 100%;
+}
+.TopOne li{
+  float: left;
+}
+.title{
+  width: 80px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 25px;
+  border: 1px solid #999;
+  background: linear-gradient(#F5F5F5, #C1C1C1);
+}
+.layui-input{
+  width: 150px;
+  height: 30px;
+}
+#Three_top,#Three_buttom,#Two_top,#Two_buttom{
+  width: 99%;
+  height: 49%;
+  border: 1px solid #999;
+  
+}
+#Three_buttom,#Two_buttom{
+  margin-top: 2px;
+}
+.layui-btn{
+  width: 80px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  background: linear-gradient(#F5F5F5, #C1C1C1);
+}
+.all{
+  width: 200px;
+  line-height: 27px;
+}
+.TopOne_one,.TopOne_two,.TopOne_three{
+  margin-top: 20px;
+  margin-left: 10px;
+  line-height: 30px;
+}
+.TopOne_one input{
+  width: 80px;
+  height: 30px;
+  background: #000;
+  text-align: center;
+  border: none;
+  color: #00ff00;
+}
+.TopOne_two select,.TopOne_three select{
+  width: 80px;
+  height: 30px;
+}
+.four button{
+  margin-top: 20px;
+  margin-left: 10px;
+}
+#checkBoxList li,.param_style li{
+  width: 20%;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+}

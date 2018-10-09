@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>two</title>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+   
+	<style type="text/css" media="screen">
+	body{
+		padding: 10px 10px;
+	}
+    	.two{
+			width: 100%;
+		    height: 100%;
+		}
+		#bin{
+			width: 70%;
+			height: 600px;
+			float: left;
+		}
+		#search{
+            float: right;
+            width: 300px;
+            height: 800px;
+            border: 1px solid #E6E6E6;
+            margin-right: 40px;
+            padding-top: 20px;
+        }
+        .layui-inline{
+            margin-bottom: 20px;
+        }
+        .layui-form-label{
+            padding: 9px 6px !important;
+        }
+        #selCity{
+            margin-left: -18px;
+            border: 1px solid #E6E6E6;
+        }
+        #searchEmailCompany,.caozuo{
+			width: 66px;
+			height: 36px;
+			margin-top: -5px;
+			line-height: 36px;
+      }
+    </style>
+</head>
+<body>
+	<div class="two">
+		<div id="bin"></div>
+		<div id="search">
+				<div class="layui-inline">
+					<span class="layui-form-label">时间类型</span>
+					<div class="layui-input-block">
+						<select id="selCity" name="city" lay-verify="required" style="height: 36px;width: 110px">
+						<option value="1">月份</option>
+						<option value="0">年</option>
+						
+						<option value="2">日期</option>
+						</select>
+						<!-- <input id="searchEmailCompany" type="button" value="查&nbsp;询" data-type="reload"> -->
+						<button id="searchEmailCompany" class="layui-btn layui-btn-primary" data-type="reload">查&nbsp;询</button>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<span class="layui-form-label">开始时间</span>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" id="begdate" name="begdate">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">结束时间</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" id="enddate" name="enddate">
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<script src="../layui/layui.js"></script>
+	<script src="../js/echarts.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	layui.use([ 'form', 'table', 'element','jquery','laydate'], function(){
+		var form = layui.form,
+		table = layui.table, 
+		element = layui.element,
+		laydate = layui.laydate,
+		$ = layui.jquery;
+
+		laydate.render({
+            elem: '#begdate',
+			value:new Date(new Date().getTime() - 86400000),
+            format: 'yyyy-MM-dd HH:mm',
+        });
+        laydate.render({
+            elem: '#enddate',
+			value: new Date(),
+            format: 'yyyy-MM-dd HH:mm'
+		});
+		$("#searchEmailCompany").on({  
+            click: function () {  
+                searchDate();
+                loadTendMap()
+            }  
+  
+		}); 
+		function searchDate() {  
+            $.ajax({
+            type: 'get',
+            url: 'http://192.168.1.105:8080/mis/ele/findByTime',//请求数据的地址
+			dataType: "json",        //返回数据形式为json
+			data: {  
+				bgTime: $("#begdate").val(),
+				endTime: $("#enddate").val(),
+				qType: $("#selCity option:selected").text()
+            }, 
+            success: function (res) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象 
+            var arr2 = new Array();
+            // var arr3 = new Array();
+            // var arr4 = new Array();
+            // var arr5 = new Array();
+            // var arr6 = new Array();
+            // var arr7 = new Array();
+            // var arr8 = new Array();
+            // var arr1 = new Array();
+            $.each(res,function(index,obj){
+
+                arr2.push(obj.Ele02);
+                // arr3.push(obj.Ele03);
+                // arr4.push(obj.Ele04);
+                // arr5.push(obj.Ele05);
+                // arr6.push(obj.Ele06);
+                // arr7.push(obj.Ele07);
+                // arr8.push(obj.Ele08);
+                // arr1.push(obj.Ele01);
+            });
+            loadTendMap(arr2)
+            },
+            error: function (errorMsg) {
+                //请求失败时执行该函数
+                // alert("图表请求数据失败!");
+            }
+        });
+        }   
+
+		
+		function loadTendMap(arr2) {
+			var myChart  = echarts.init(document.getElementById('bin'));
+			var option = {
+				title : {
+					text: '能耗月占比',
+					x:'left',
+					top:'0'
+
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					// left: 'right',
+					right:'0',
+					top:'50',
+					data:[],
+					// data: ['生产总表','烘干一段','烘干二段','烘干三段','烘干四段','烘干五段','收放卷','实验室'],
+				},
+				series : [
+					{
+						name: '能耗占比',
+						type: 'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data :arr2,
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			myChart .setOption(option);
+		}
+		
+
+		$.ajax({
+            type: 'get',
+            url: 'http://192.168.1.105:8080/mis/ele/findByTime',//请求数据的地址
+            dataType: "json",        //返回数据形式为json
+            success: function (res) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象 
+            var arr2 = new Array();
+            // var arr3 = new Array();
+            // var arr4 = new Array();
+            // var arr5 = new Array();
+            // var arr6 = new Array();
+            // var arr7 = new Array();
+            // var arr8 = new Array();
+            // var arr9 = new Array();
+            $.each(res,function(index,obj){
+                arr2.push(obj.Ele02);
+                // arr3.push(obj.Ele03);
+                // arr4.push(obj.Ele04);
+                // arr5.push(obj.Ele05);
+                // arr6.push(obj.Ele06);
+                // arr7.push(obj.Ele07);
+                // arr8.push(obj.Ele08);
+                // arr9.push(obj.Ele01);
+            });
+            loadTendMap(arr2)
+            },
+            error: function (errorMsg) {
+                //请求失败时执行该函数
+                // alert("图表请求数据失败!");
+            }
+        });
+	})
+</script>
+
+</body>
+</html>

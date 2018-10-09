@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="author" content="order by dede58.com"/>
+	<title>个人信息</title>
+	<meta name="renderer" content="webkit">	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+	<meta name="apple-mobile-web-app-capable" content="yes">	
+	<meta name="format-detection" content="telephone=no">	
+	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" media="all">
+	<!-- <link rel="stylesheet" type="text/css" href="common/bootstrap/css/bootstrap.css" media="all"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="common/global.css" media="all"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="css/personal.css" media="all"> -->
+</head>
+<body>
+	<div id="head" style="padding: 10px 10px">
+		<form class="layui-form" action="">
+			<div class="layui-form-item">
+					<label class="layui-form-label">用户名</label>
+					<div class="layui-input-inline">
+						<input type="name" id="userName" required lay-verify="required" placeholder="请输入姓名"  class="layui-input">
+					</div>
+				<!-- <div class="layui-form-mid layui-word-aux">辅助文字</div> -->
+			</div>
+			<div class="layui-form-item">
+					<label class="layui-form-label">电话</label>
+					<div class="layui-input-inline">
+						<input type="name" id="phone" required lay-verify="required" placeholder="请输入电话"  class="layui-input">
+					</div>
+				<!-- <div class="layui-form-mid layui-word-aux">辅助文字</div> -->
+			</div>
+			<div class="layui-form-item">
+					<label class="layui-form-label">密码</label>
+					<div class="layui-input-inline">
+						<input type="password" id="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+						<label class="layui-form-label">确认密码</label>
+						<div class="layui-input-inline">
+							<input type="password" id="repassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+						</div>
+				</div>
+			<!-- <div class="layui-form-item">
+				<label class="layui-form-label">公司</label>
+				<div class="layui-input-inline">
+					<input type="password" id="Company" required lay-verify="required" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
+				</div>
+			</div> -->
+			<div class="layui-inline">
+					<span class="layui-form-label">部门</span>
+					<div class="layui-input-block" style="width: 190px;">
+						<select id="department" name="city" lay-verify="required" style="height: 36px;width: 110px">
+								<option value="1">生产管理部</option>
+								<option value="2">财务部</option>
+								<option value="3">技术部</option>
+						</select>
+					</div>
+			</div>
+			<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button id="save" class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 20px">保存</button>
+				<button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 20px">重置</button>
+			</div>
+			</div>
+		</form>
+	</div>  
+	<script src="../layui/layui.js"></script>
+	<script type="text/javascript">
+	  //Demo
+	layui.use(['form','laydate', 'layer', 'table', 'element','jquery'], function(){
+		var laydate = layui.laydate //日期
+		,laypage = layui.laypage //分页
+		,layer = layui.layer //弹层
+		,table = layui.table //表格
+		,element = layui.element //元素操作
+		,$ = layui.jquery,
+		form = layui.form
+		
+	
+		// form.on('submit(formDemo)', function(data){
+			$(function() {
+			$("#save").on('click',function(e){ 
+				if($("#password").val() == $("#repassword").val() ){
+					$.ajax({
+						url:"http://192.168.1.105:8080/mis/u/addUser",
+						type: "POST",
+						dataType: "json",
+						data:{
+							userName: $("#userName").val(),
+							pwd: $("#password").val(),
+							// pwd: $("#repassword").val(),
+							phone: $("#phone").val(),
+							department: $("#department option:selected").text()
+						},
+						success: function(data){
+							
+                            if(data==1){
+								alert('用户添加成功');
+                                // layer.msg("修改成功", {icon: 6});
+                            }else{
+								alert('用户已存在');
+                                // layer.msg("修改失败", {icon: 5});
+                            }
+                        }
+					})
+					
+				}else{
+					layer.msg('密码输入不一致');
+				}
+					
+			})
+		})
+	});
+	  </script>
+</body>
+</html>

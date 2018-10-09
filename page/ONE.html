@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>系统管理员列表</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../layui/layui.js" charset="utf-8"></script>
+		<style type="text/css" media="screen">
+			.container{
+				padding: 10px 10px;
+				text-align: center;
+			}
+			#data_page{
+				width: 100%;
+				height: 600px;
+				/* height: 90%; */
+				border: 1px solid #000;
+			}
+			.page1{
+				width: 280px;
+				height: 300px;
+				border: 1px solid red;
+				float: left;
+				margin-left: 12%;
+			}
+			.pt{
+				width: 74px;
+				background-color: #000000;
+				border: 1px solid #fff;
+				position: absolute;
+				opacity:0.6;
+				font-size: 18px;
+			
+		}
+		.pt span{
+				color: #fff;
+				font-size: 16px;
+				float: right;
+				line-height: 25px;
+		}
+
+		.pt input{
+				width: 50px;
+				background-color: #000000;
+				float: left;
+				border: none;
+				color:#00ff00;
+				height: 25px;
+		}
+		#outroom input{
+			height:25px;
+			width: 120px;
+			background:#000;
+			font-size: 16px;
+			color:#00ff00;
+			text-align: center;
+			border: 1px solid #fff;
+			font-weight:bold;
+		}
+		#outroom li{
+			margin-top: 20px;
+		}
+    </style>
+
+</head>
+<body>
+	<div class="container">
+			<div id="data_page">
+				<ul>
+					<li class="page1">
+						<!-- <label for="">装置一</label>
+						<input type="text" class="layui-input" disabled id="">
+						<span>Kw/h</span> -->
+					</li>
+					<li class="page1">
+							<ul id="outroom">
+									
+									<li style="height: 25px;">
+											<span style="font-size: 16px">装置一</span>
+											<div style="width:160px;height: 25px;background-color: #000000;float: right;">
+												 <input type="text" disabled id="KT-A1/WD1-WD" style="border: none"><span style="color:#fff">Kw/h</span>
+											</div>
+									</li>
+									<li style="height: 25px;">
+											<span style="font-size: 16px">装置二</span>
+											<div style="width:160px;height: 25px;background-color: #000000;float: right;">
+												 <input type="text" disabled id="KT-A1/WD1-WD" style="border: none"><span style="color:#fff">Kw/h</span>
+											</div>
+									</li>
+									<li style="height: 25px;">
+											<span style="font-size: 16px">装置三</span>
+											<div style="width:160px;height: 25px;background-color: #000000;float: right;">
+												 <input type="text" disabled id="KT-A1/WD1-WD" style="border: none"><span style="color:#fff">Kw/h</span>
+											</div>
+									</li>
+								
+							</ul>
+					
+					</li>
+					<li class="page1"></li>
+				</ul>
+			</div>
+	</div>
+	
+<script>
+layui.use(['form', 'table','jquery','laypage'], function(){
+	var form = layui.form
+	,table = layui.table
+	,$ = layui.jquery
+	,laypage = layui.laypage;
+
+ 
+});
+
+</script>
+
+</body>
+</html>
